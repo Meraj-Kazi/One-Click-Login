@@ -1,9 +1,8 @@
 # One Click Login 
+One click login implementation through popular social media such as facebook, google, twitter etc. using NodeJS, PassportJS, MongoDB.
 
-One click login implementation through popular social media such as facebook, google, twitter etc. 
 
-
-=============
+<hr>
 
 #### Need help with something like this on your project? 
 

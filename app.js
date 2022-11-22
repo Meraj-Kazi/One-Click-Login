@@ -1,6 +1,8 @@
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
+const mongoose = require('mongoose');
+require("dotenv").config();
 require("./auth");
 
 const app = express();
@@ -12,6 +14,11 @@ function isLoggedIn(req, res, next) {
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// connect to mongodb
+mongoose.connect(process.env.MONGO_URL, () => {
+  console.log('connected to mongodb');
+});
 
 app.get("/", (req, res) => {
   res.send(
@@ -33,7 +40,7 @@ app.get(
 );
 
 app.get("/protected", isLoggedIn, (req, res) => {
-  res.send(`Hello ${req.user.displayName}`);
+  res.send(`Hello ${req.user.username}`);
 });
 
 app.get("/auth/google/failure", (req, res) => {
@@ -54,7 +61,7 @@ app.get(
 );
 
 app.get("/facebook/protected", isLoggedIn, (req, res) => {
-  res.send(`Hello ${req.user.displayName}`);
+  res.send(`Hello ${req.user.username}`);
 });
 
 app.get("/auth/facebook/failure", (req, res) => {
